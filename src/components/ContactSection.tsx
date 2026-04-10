@@ -1,14 +1,43 @@
 import { useState } from "react";
-import { Mail, Phone, Linkedin, Github, Send } from "lucide-react";
+import { Mail, Phone, Linkedin, Github, Send, Loader2 } from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { useToast } from "@/hooks/use-toast";
 
 const ContactSection = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // placeholder submit
-    alert("Thank you for your message! I'll get back to you soon.");
-    setForm({ name: "", email: "", message: "" });
+    setLoading(true);
+
+    try {
+      await emailjs.send(
+        "service_gxmf6op",
+        "template_59pgeld",
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+        },
+        "frIiErDx40RVaZboA"
+      );
+
+      toast({
+        title: "Message sent!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+      setForm({ name: "", email: "", message: "" });
+    } catch (error) {
+      toast({
+        title: "Failed to send",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -76,9 +105,11 @@ const ContactSection = () => {
             />
             <button
               type="submit"
-              className="flex items-center gap-2 px-7 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:opacity-90 transition shadow-lg shadow-primary/30"
+              disabled={loading}
+              className="flex items-center gap-2 px-7 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:opacity-90 transition shadow-lg shadow-primary/30 disabled:opacity-60"
             >
-              <Send size={16} /> Send Message
+              {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+              {loading ? "Sending..." : "Send Message"}
             </button>
           </form>
         </div>

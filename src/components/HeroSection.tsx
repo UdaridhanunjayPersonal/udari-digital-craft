@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import profileImg from "@/assets/profile.jpg";
-import heroBg from "@/assets/hero-bg-dark.jpg";
 
 const TypewriterText = ({ texts }: { texts: string[] }) => {
   const ref = useRef<HTMLSpanElement>(null);
@@ -55,17 +54,8 @@ const HeroSection = () => (
     id="home"
     className="relative min-h-screen flex items-center overflow-hidden"
   >
-    {/* Background image with overlay */}
-    <div className="absolute inset-0">
-      <img
-        src={heroBg}
-        alt=""
-        className="w-full h-full object-cover"
-        width={1920}
-        height={1080}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
-    </div>
+    {/* Background gradient overlay */}
+    <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background" />
 
     {/* Animated floating particles */}
     <FloatingParticle className="w-2 h-2 bg-primary/40 top-[20%] left-[10%] animate-float" />

@@ -30,7 +30,7 @@ const ContactSection = () => {
                 { icon: Mail, label: "UdaridhanujayPersonal@gmail.com", href: "mailto:UdaridhanujayPersonal@gmail.com" },
                 { icon: Phone, label: "+91 8074247911", href: "tel:+918074247911" },
                 { icon: Linkedin, label: "www.linkedin.com/in/dhanunjay-udari-0a0672324", href: "https://www.linkedin.com/in/dhanunjay-udari-0a0672324" },
-                { icon: Github, label: "github.com/udaridhanunjayPersonal", href: "https://github.com/github.com/udaridhanunjayPersonal" },
+                { icon: Github, label: "github.com/udaridhanunjayPersonal", href: "https://github.com/udaridhanunjayPersonal" },
               ].map((item) => (
                 <a
                   key={item.label}

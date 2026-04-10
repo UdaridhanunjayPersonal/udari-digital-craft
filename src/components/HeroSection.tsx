@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
 import profileImg from "@/assets/profile.jpg";
-import heroBg from "@/assets/hero-bg-dark.jpg";
+import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 
-const TypewriterText = ({ texts }: { texts: string[] }) => {
+const roles = ["Software Developer", "CS Student", "Problem Solver", "Tech Enthusiast"];
+
+const TypewriterText = () => {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -12,177 +14,185 @@ const TypewriterText = ({ texts }: { texts: string[] }) => {
     let timeout: ReturnType<typeof setTimeout>;
 
     const tick = () => {
-      const current = texts[textIdx];
-      if (ref.current) {
-        ref.current.textContent = current.slice(0, charIdx);
-      }
+      const current = roles[textIdx];
+      if (ref.current) ref.current.textContent = current.slice(0, charIdx);
 
       if (!deleting) {
         charIdx++;
         if (charIdx > current.length) {
           deleting = true;
-          timeout = setTimeout(tick, 1800);
+          timeout = setTimeout(tick, 2000);
           return;
         }
       } else {
         charIdx--;
         if (charIdx === 0) {
           deleting = false;
-          textIdx = (textIdx + 1) % texts.length;
+          textIdx = (textIdx + 1) % roles.length;
         }
       }
-      timeout = setTimeout(tick, deleting ? 40 : 80);
+      timeout = setTimeout(tick, deleting ? 35 : 70);
     };
 
     tick();
     return () => clearTimeout(timeout);
-  }, [texts]);
+  }, []);
 
   return (
     <span className="text-primary">
       <span ref={ref} />
-      <span className="animate-pulse">|</span>
+      <span className="animate-blink">|</span>
     </span>
   );
 };
 
-const FloatingParticle = ({ className }: { className: string }) => (
-  <div className={`absolute rounded-full pointer-events-none ${className}`} />
-);
-
 const HeroSection = () => (
   <section
     id="home"
-    className="relative min-h-screen flex items-center overflow-hidden"
+    className="relative min-h-screen flex items-center overflow-hidden bg-background"
   >
-    {/* Background image with overlay */}
-    <div className="absolute inset-0">
-      <img
-        src={heroBg}
-        alt=""
-        className="w-full h-full object-cover"
-        width={1920}
-        height={1080}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
-    </div>
+    {/* Geometric grid background */}
+    <div className="absolute inset-0 hero-grid opacity-[0.03]" />
 
-    {/* Animated floating particles */}
-    <FloatingParticle className="w-2 h-2 bg-primary/40 top-[20%] left-[10%] animate-float" />
-    <FloatingParticle className="w-3 h-3 bg-accent/30 top-[30%] right-[15%] animate-float [animation-delay:1s]" />
-    <FloatingParticle className="w-1.5 h-1.5 bg-primary/50 top-[60%] left-[25%] animate-float [animation-delay:2s]" />
-    <FloatingParticle className="w-2 h-2 bg-accent/40 top-[70%] right-[30%] animate-float [animation-delay:0.5s]" />
-    <FloatingParticle className="w-1 h-1 bg-primary/60 top-[45%] left-[60%] animate-float [animation-delay:1.5s]" />
+    {/* Gradient orbs */}
+    <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-primary/10 blur-[120px] animate-pulse-slow" />
+    <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] rounded-full bg-accent/10 blur-[120px] animate-pulse-slow [animation-delay:2s]" />
 
-    {/* Glowing orbs */}
-    <div className="absolute top-1/4 -left-20 w-72 h-72 rounded-full bg-primary/15 blur-[100px] animate-pulse-slow" />
-    <div className="absolute bottom-1/4 -right-20 w-80 h-80 rounded-full bg-accent/15 blur-[100px] animate-pulse-slow [animation-delay:2s]" />
+    {/* Accent line */}
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-primary/40 to-transparent" />
 
-    <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10 px-4 md:px-8 lg:px-16 pt-28 pb-20">
-      {/* Text content */}
-      <div className="space-y-6 animate-fade-in-up">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm">
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <span className="text-sm font-medium text-primary">Available for opportunities</span>
+    <div className="container mx-auto relative z-10 px-6 md:px-12 lg:px-20 pt-24 pb-16">
+      <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
+        {/* Left — text (3 cols) */}
+        <div className="lg:col-span-3 space-y-7 animate-fade-in-up">
+          {/* Status badge */}
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-card border border-border shadow-sm">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+            </span>
+            <span className="text-sm font-medium text-muted-foreground">Open to opportunities</span>
+          </div>
+
+          <div>
+            <p className="text-base md:text-lg text-muted-foreground mb-2">Hello, I'm</p>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold leading-[1.1] tracking-tight text-foreground">
+              Udari
+              <br />
+              <span className="gradient-text">Dhanunjay</span>
+            </h1>
+          </div>
+
+          <div className="text-xl md:text-2xl font-heading font-medium text-foreground/70 min-h-[2rem]">
+            <TypewriterText />
+          </div>
+
+          <p className="text-muted-foreground max-w-xl leading-relaxed">
+            I am a technology-driven individual passionate about problem-solving and building
+            efficient systems. I enjoy working with modern web technologies and continuously
+            learning new skills to grow as a developer.
+          </p>
+
+          {/* CTA buttons */}
+          <div className="flex items-center gap-4 flex-wrap pt-1">
+            <a
+              href="#projects"
+              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              View Projects
+              <ArrowDown size={16} className="group-hover:translate-y-0.5 transition-transform" />
+            </a>
+            <a
+              href="#contact"
+              className="px-7 py-3.5 rounded-xl border-2 border-border text-foreground font-semibold hover:border-primary hover:text-primary transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              Contact Me
+            </a>
+          </div>
+
+          {/* Social links */}
+          <div className="flex items-center gap-4 pt-2">
+            {[
+              { icon: Github, href: "#", label: "GitHub" },
+              { icon: Linkedin, href: "#", label: "LinkedIn" },
+              { icon: Mail, href: "mailto:udari.dhanunjay@email.com", label: "Email" },
+            ].map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                aria-label={s.label}
+                className="w-10 h-10 rounded-lg bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-200 hover:-translate-y-0.5"
+              >
+                <s.icon size={18} />
+              </a>
+            ))}
+          </div>
         </div>
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight text-foreground">
-          Hello, I'm{" "}
-          <span className="gradient-text">Udari Dhanunjay</span>
-        </h1>
+        {/* Right — profile card (2 cols) */}
+        <div className="lg:col-span-2 flex justify-center animate-fade-in-up [animation-delay:0.15s]">
+          <div className="relative">
+            {/* Rotating dashed ring */}
+            <div className="absolute inset-[-20px] rounded-full border border-dashed border-primary/15 animate-spin-slow" />
 
-        <div className="text-xl md:text-2xl font-heading font-medium text-foreground/80 h-9">
-          <TypewriterText
-            texts={[
-              "Software Developer",
-              "CS Student",
-              "Problem Solver",
-              "Tech Enthusiast",
-            ]}
-          />
-        </div>
+            {/* Profile container */}
+            <div className="relative group">
+              {/* Gradient border */}
+              <div className="absolute inset-[-3px] rounded-3xl bg-gradient-to-br from-primary via-accent to-primary opacity-60 group-hover:opacity-100 transition-opacity duration-500 blur-[1px]" />
 
-        <p className="text-muted-foreground max-w-lg leading-relaxed text-base">
-          I am a technology-driven individual passionate about problem-solving and building efficient
-          systems. I enjoy working with modern web technologies and continuously learning new skills
-          to grow as a developer.
-        </p>
+              <div className="relative w-64 h-72 md:w-72 md:h-80 lg:w-80 lg:h-[22rem] rounded-3xl overflow-hidden bg-card shadow-2xl">
+                <img
+                  src={profileImg}
+                  alt="Udari Dhanunjay"
+                  className="w-full h-full object-cover object-top"
+                  width={512}
+                  height={512}
+                />
+                {/* Overlay gradient at bottom */}
+                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-card via-card/60 to-transparent" />
 
-        {/* Stats row */}
-        <div className="flex gap-8 py-2">
-          {[
-            { value: "3+", label: "Years Learning" },
-            { value: "5+", label: "Projects" },
-            { value: "4+", label: "Technologies" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-2xl font-heading font-bold gradient-text">{stat.value}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">{stat.label}</div>
+                {/* Name bar at bottom */}
+                <div className="absolute bottom-4 left-4 right-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-foreground truncate">Udari Dhanunjay</p>
+                      <p className="text-xs text-muted-foreground">B.Tech CSE • CMRIT</p>
+                    </div>
+                    <div className="flex gap-1">
+                      {["Python", "React"].map((t) => (
+                        <span key={t} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          ))}
-        </div>
 
-        <div className="flex gap-4 flex-wrap pt-2">
-          <a
-            href="#projects"
-            className="group relative px-7 py-3 rounded-full bg-primary text-primary-foreground font-semibold transition-all duration-300 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-105"
-          >
-            <span className="relative z-10">View Projects</span>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </a>
-          <a
-            href="#contact"
-            className="px-7 py-3 rounded-full border-2 border-primary/50 text-primary font-semibold hover:bg-primary/10 hover:border-primary transition-all duration-300 hover:scale-105 backdrop-blur-sm"
-          >
-            Contact Me
-          </a>
-        </div>
-      </div>
+            {/* Stats floating cards */}
+            <div className="absolute -top-6 -left-6 bg-card/95 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg border border-border animate-float z-20">
+              <div className="text-xl font-heading font-bold gradient-text">3+</div>
+              <div className="text-[10px] text-muted-foreground font-medium">Years Learning</div>
+            </div>
 
-      {/* Profile image with decorative elements */}
-      <div className="flex justify-center animate-fade-in-up [animation-delay:0.2s]">
-        <div className="relative">
-          {/* Rotating ring */}
-          <div className="absolute inset-[-16px] rounded-full border-2 border-dashed border-primary/20 animate-spin-slow" />
-          {/* Gradient ring */}
-          <div className="absolute inset-[-4px] rounded-full bg-gradient-to-tr from-primary via-accent to-primary p-[3px] animate-float">
-            <div className="w-full h-full rounded-full bg-background" />
-          </div>
-
-          <div className="w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden relative z-10 shadow-2xl shadow-primary/20">
-            <img
-              src={profileImg}
-              alt="Udari Dhanunjay"
-              className="w-full h-full object-cover"
-              width={512}
-              height={512}
-            />
-          </div>
-
-          {/* Floating badges */}
-          <div className="absolute -top-4 -right-4 bg-card/90 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-lg border border-border/50 animate-float z-20">
-            <span className="text-lg font-heading font-bold text-primary">🎓</span>
-            <span className="text-xs text-muted-foreground ml-1.5">B.Tech CSE</span>
-          </div>
-
-          <div className="absolute -bottom-2 -left-6 bg-card/90 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-lg border border-border/50 animate-float [animation-delay:1.5s] z-20">
-            <span className="text-lg">⚡</span>
-            <span className="text-xs text-muted-foreground ml-1.5">React & Python</span>
-          </div>
-
-          <div className="absolute bottom-8 -right-8 bg-card/90 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-lg border border-border/50 animate-float [animation-delay:0.8s] z-20">
-            <span className="text-lg">💻</span>
-            <span className="text-xs text-muted-foreground ml-1.5">Full Stack</span>
+            <div className="absolute -bottom-4 -right-4 bg-card/95 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg border border-border animate-float [animation-delay:1s] z-20">
+              <div className="text-xl font-heading font-bold gradient-text">5+</div>
+              <div className="text-[10px] text-muted-foreground font-medium">Projects Built</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     {/* Scroll indicator */}
-    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-      <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex justify-center pt-2">
-        <div className="w-1.5 h-3 rounded-full bg-primary animate-pulse" />
-      </div>
+    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
+      <a href="#about" className="flex flex-col items-center gap-2 text-muted-foreground/50 hover:text-primary transition-colors">
+        <span className="text-[10px] tracking-widest uppercase">Scroll</span>
+        <div className="w-5 h-8 rounded-full border border-current flex justify-center pt-1.5">
+          <div className="w-1 h-2 rounded-full bg-current animate-bounce" />
+        </div>
+      </a>
     </div>
   </section>
 );

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import profileImg from "@/assets/profile.jpg";
-import heroBg from "@/assets/hero-bg-dark.jpg";
 
 const TypewriterText = ({ texts }: { texts: string[] }) => {
   const ref = useRef<HTMLSpanElement>(null);

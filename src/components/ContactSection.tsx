@@ -27,7 +27,7 @@ const ContactSection = () => {
 
             <div className="space-y-4">
               {[
-                { icon: Mail, label: "udari.dhanunjay@email.com", href: "mailto:udari.dhanunjay@email.com" },
+                { icon: Mail, label: "UdaridhanujayPersonal@gmail.com", href: "mailto:UdaridhanujayPersonal@gmail.com" },
                 { icon: Phone, label: "+91 XXXXX XXXXX", href: "tel:+91" },
                 { icon: Linkedin, label: "LinkedIn Profile", href: "#" },
                 { icon: Github, label: "GitHub Profile", href: "#" },

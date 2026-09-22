@@ -1,78 +1,102 @@
-import { Code2, Globe, Wrench, Sparkles } from "lucide-react";
+import {
+  Braces,
+  Code,
+  Globe,
+  Lightbulb,
+  MonitorSmartphone,
+  Puzzle,
+  Server,
+  Terminal,
+  Wrench,
+} from "lucide-react";
 
 const categories = [
   {
-    icon: Code2,
     title: "Programming Languages",
+    icon: Braces,
     skills: [
-      { name: "Python", level: 80 },
-      { name: "Java", level: 70 },
+      { name: "Python", level: 85 },
+      { name: "Java", level: 75 },
     ],
   },
   {
-    icon: Globe,
     title: "Web Technologies",
+    icon: Globe,
     skills: [
-      { name: "React.js", level: 75 },
-      { name: "Node.js", level: 65 },
+      { name: "React.js", level: 80 },
+      { name: "Node.js", level: 70 },
       { name: "Tailwind CSS", level: 85 },
-      { name: "Bootstrap", level: 80 },
+      { name: "Bootstrap", level: 75 },
     ],
   },
   {
-    icon: Wrench,
     title: "Developer Tools",
+    icon: Terminal,
     skills: [
       { name: "Git", level: 80 },
-      { name: "GitHub", level: 85 },
+      { name: "GitHub", level: 80 },
       { name: "VS Code", level: 90 },
-    ],
-  },
-  {
-    icon: Sparkles,
-    title: "Other Skills",
-    skills: [
-      { name: "Prompt Engineering", level: 75 },
-      { name: "Problem Solving", level: 85 },
-      { name: "RESTful APIs", level: 70 },
     ],
   },
 ];
 
-const SkillsSection = () => (
-  <section id="skills" className="section-padding">
-    <div className="container mx-auto max-w-5xl">
-      <p className="section-subtitle text-center">Skills</p>
-      <h2 className="section-title text-center mt-2 mb-12">My Technical Toolkit</h2>
+const otherSkills = [
+  { icon: Server, name: "ServiceNow Platform" },
+  { icon: Puzzle, name: "Prompt Engineering" },
+  { icon: Lightbulb, name: "Problem Solving" },
+  { icon: Wrench, name: "RESTful APIs" },
+  { icon: MonitorSmartphone, name: "Responsive Design" },
+  { icon: Code, name: "Troubleshooting" },
+];
 
-      <div className="grid md:grid-cols-2 gap-8">
+const SkillBar = ({ name, level }: { name: string; level: number }) => (
+  <div>
+    <div className="mb-1 flex items-center justify-between text-sm">
+      <span>{name}</span>
+      <span className="text-muted-foreground">{level}%</span>
+    </div>
+    <div className="h-2 overflow-hidden rounded-full bg-muted">
+      <div
+        className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-1000"
+        style={{ width: `${level}%` }}
+      />
+    </div>
+  </div>
+);
+
+const SkillsSection = () => (
+  <section id="skills" className="bg-card/40 py-24">
+    <div className="container">
+      <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-primary">Skills</p>
+      <h2 className="mb-12 font-heading text-3xl font-bold sm:text-4xl">What I Work With</h2>
+
+      <div className="grid gap-6 lg:grid-cols-3">
         {categories.map((cat) => (
-          <div
-            key={cat.title}
-            className="p-6 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all duration-300"
-          >
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <cat.icon className="w-5 h-5 text-primary" />
+          <div key={cat.title} className="glass-card rounded-xl p-6 transition-all hover:-translate-y-1 hover:border-primary/40">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                <cat.icon size={22} />
               </div>
-              <h3 className="font-heading font-semibold text-foreground">{cat.title}</h3>
+              <h3 className="font-heading text-lg font-semibold">{cat.title}</h3>
             </div>
             <div className="space-y-4">
               {cat.skills.map((s) => (
-                <div key={s.name}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-foreground font-medium">{s.name}</span>
-                    <span className="text-muted-foreground">{s.level}%</span>
-                  </div>
-                  <div className="h-2 rounded-full bg-muted overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-primary transition-all duration-700"
-                      style={{ width: `${s.level}%` }}
-                    />
-                  </div>
-                </div>
+                <SkillBar key={s.name} name={s.name} level={s.level} />
               ))}
             </div>
+          </div>
+        ))}
+      </div>
+
+      <h3 className="mb-6 mt-12 font-heading text-xl font-semibold">Other Skills</h3>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        {otherSkills.map((s) => (
+          <div
+            key={s.name}
+            className="glass-card flex flex-col items-center gap-2 rounded-xl p-4 text-center transition-all hover:-translate-y-1 hover:border-primary/40"
+          >
+            <s.icon className="text-primary" size={24} />
+            <span className="text-xs font-medium sm:text-sm">{s.name}</span>
           </div>
         ))}
       </div>

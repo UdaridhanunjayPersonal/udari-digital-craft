@@ -1,36 +1,49 @@
-import { GraduationCap, Target, Lightbulb } from "lucide-react";
+import { Network, Target, Wrench, TrendingUp } from "lucide-react";
 
 const highlights = [
-  { icon: GraduationCap, title: "B.Tech CSE", desc: "CMR Institute of Technology, Hyderabad (2023–2026)" },
-  { icon: Target, title: "Career Focus", desc: "System Administration, Data Analytics & Machine Learning" },
-  { icon: Lightbulb, title: "Passion", desc: "Networking, Troubleshooting & Data-Driven Applications" },
+  {
+    icon: Wrench,
+    title: "Hands-on Foundation",
+    text: "Strong interest in networking, troubleshooting, and data-driven applications built during my B.Tech journey.",
+  },
+  {
+    icon: Network,
+    title: "Platform Focus",
+    text: "Developing expertise in ServiceNow development — workflows, service portals, and business automation.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Real-World Problems",
+    text: "Passionate about solving real-world problems using technology and continuous learning.",
+  },
+  {
+    icon: Target,
+    title: "Career Goals",
+    text: "Aiming to grow in ServiceNow development, system administration, data analytics, and machine learning.",
+  },
 ];
 
 const AboutSection = () => (
-  <section id="about" className="section-padding bg-card">
-    <div className="container mx-auto max-w-5xl">
-      <p className="section-subtitle text-center">About Me</p>
-      <h2 className="section-title text-center mt-2 mb-6">
-        Designing Solutions, Not Just Visuals
-      </h2>
-      <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-        I'm currently pursuing B.Tech in Computer Science and Engineering with a strong interest in
-        networking, troubleshooting, and data-driven applications. I'm passionate about solving
-        real-world problems using technology and aspire to grow in system administration, data
-        analytics, and machine learning.
+  <section id="about" className="py-24">
+    <div className="container">
+      <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-primary">About Me</p>
+      <h2 className="mb-4 font-heading text-3xl font-bold sm:text-4xl">Who I Am</h2>
+      <p className="mb-12 max-w-3xl leading-relaxed text-muted-foreground">
+        I am currently pursuing my B.Tech in Computer Science and Engineering at CMR Institute of
+        Technology, Hyderabad (2023–2026). I love exploring how systems work end to end — from
+        networks and servers to modern web platforms — and turning that understanding into
+        efficient, reliable solutions.
       </p>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid gap-6 sm:grid-cols-2">
         {highlights.map((h) => (
           <div
             key={h.title}
-            className="group p-6 rounded-2xl bg-background border border-border hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300"
+            className="glass-card group rounded-xl p-6 transition-all hover:-translate-y-1 hover:border-primary/40"
           >
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition">
-              <h.icon className="w-6 h-6 text-primary" />
-            </div>
-            <h3 className="font-heading font-semibold text-foreground mb-2">{h.title}</h3>
-            <p className="text-sm text-muted-foreground">{h.desc}</p>
+            <h.icon className="mb-4 text-primary transition-transform group-hover:scale-110" size={28} />
+            <h3 className="mb-2 font-heading text-lg font-semibold">{h.title}</h3>
+            <p className="text-sm leading-relaxed text-muted-foreground">{h.text}</p>
           </div>
         ))}
       </div>

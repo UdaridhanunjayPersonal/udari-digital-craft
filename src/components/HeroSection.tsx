@@ -1,180 +1,134 @@
-import { useEffect, useRef } from "react";
-import profileImg from "@/assets/profile.jpg";
+import { useEffect, useState } from "react";
+import { ArrowRight, ChevronDown, Code2, GraduationCap, Mail, Zap } from "lucide-react";
 
-const TypewriterText = ({ texts }: { texts: string[] }) => {
-  const ref = useRef<HTMLSpanElement>(null);
+const ROLES = ["ServiceNow Developer", "Computer Science Student", "Problem Solver", "Tech Enthusiast"];
+
+const useTypewriter = (words: string[]) => {
+  const [index, setIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    let textIdx = 0;
-    let charIdx = 0;
-    let deleting = false;
-    let timeout: ReturnType<typeof setTimeout>;
+    const word = words[index % words.length];
+    const speed = deleting ? 50 : 100;
 
-    const tick = () => {
-      const current = texts[textIdx];
-      if (ref.current) {
-        ref.current.textContent = current.slice(0, charIdx);
-      }
-
+    const t = setTimeout(() => {
       if (!deleting) {
-        charIdx++;
-        if (charIdx > current.length) {
-          deleting = true;
-          timeout = setTimeout(tick, 1800);
-          return;
-        }
+        const next = word.slice(0, text.length + 1);
+        setText(next);
+        if (next === word) setTimeout(() => setDeleting(true), 1600);
       } else {
-        charIdx--;
-        if (charIdx === 0) {
-          deleting = false;
-          textIdx = (textIdx + 1) % texts.length;
+        const next = word.slice(0, text.length - 1);
+        setText(next);
+        if (next === "") {
+          setDeleting(false);
+          setIndex((i) => (i + 1) % words.length);
         }
       }
-      timeout = setTimeout(tick, deleting ? 40 : 80);
-    };
+    }, speed);
+    return () => clearTimeout(t);
+  }, [text, deleting, index, words]);
 
-    tick();
-    return () => clearTimeout(timeout);
-  }, [texts]);
-
-  return (
-    <span className="text-primary">
-      <span ref={ref} />
-      <span className="animate-pulse">|</span>
-    </span>
-  );
+  return text;
 };
 
-const FloatingParticle = ({ className }: { className: string }) => (
-  <div className={`absolute rounded-full pointer-events-none ${className}`} />
-);
+const HeroSection = () => {
+  const typed = useTypewriter(ROLES);
 
-const HeroSection = () => (
-  <section
-    id="home"
-    className="relative min-h-screen flex items-center overflow-hidden"
-  >
-    {/* Background gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background" />
+  return (
+    <section id="home" className="relative flex min-h-screen items-center overflow-hidden">
+      {/* Subtle gradient glow */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-32 left-1/4 h-96 w-96 rounded-full bg-primary/15 blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-accent/15 blur-[120px]" />
+      </div>
 
-    {/* Animated floating particles */}
-    <FloatingParticle className="w-2 h-2 bg-primary/40 top-[20%] left-[10%] animate-float" />
-    <FloatingParticle className="w-3 h-3 bg-accent/30 top-[30%] right-[15%] animate-float [animation-delay:1s]" />
-    <FloatingParticle className="w-1.5 h-1.5 bg-primary/50 top-[60%] left-[25%] animate-float [animation-delay:2s]" />
-    <FloatingParticle className="w-2 h-2 bg-accent/40 top-[70%] right-[30%] animate-float [animation-delay:0.5s]" />
-    <FloatingParticle className="w-1 h-1 bg-primary/60 top-[45%] left-[60%] animate-float [animation-delay:1.5s]" />
+      <div className="container grid items-center gap-12 py-24 md:grid-cols-2">
+        {/* Left */}
+        <div className="animate-fade-in-up space-y-6">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+            </span>
+            Open to opportunities
+          </span>
 
-    {/* Glowing orbs */}
-    <div className="absolute top-1/4 -left-20 w-72 h-72 rounded-full bg-primary/15 blur-[100px] animate-pulse-slow" />
-    <div className="absolute bottom-1/4 -right-20 w-80 h-80 rounded-full bg-accent/15 blur-[100px] animate-pulse-slow [animation-delay:2s]" />
+          <h1 className="font-heading text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            Hi, I'm <span className="text-gradient">Udari Dhanunjay</span>
+          </h1>
 
-    <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10 px-4 md:px-8 lg:px-16 pt-28 pb-20">
-      {/* Text content */}
-      <div className="space-y-6 animate-fade-in-up">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm">
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <span className="text-sm font-medium text-primary">Available for opportunities</span>
+          <p className="font-heading text-xl text-muted-foreground sm:text-2xl">
+            <span className="text-foreground">{typed}</span>
+            <span className="animate-pulse text-primary">|</span>
+          </p>
+
+          <p className="max-w-xl leading-relaxed text-muted-foreground">
+            I am a technology-driven individual passionate about problem-solving and building
+            efficient systems. I enjoy working with modern web technologies and continuously
+            learning new skills to grow as a developer.
+          </p>
+
+          <div className="flex flex-wrap gap-4 pt-2">
+            <a
+              href="#projects"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-105"
+            >
+              View Projects <ArrowRight size={18} />
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 font-semibold transition-colors hover:border-primary hover:text-primary"
+            >
+              <Mail size={18} /> Contact Me
+            </a>
+          </div>
+
+          <div className="flex gap-10 pt-6">
+            {[
+              { value: "3+", label: "Years Learning" },
+              { value: "5+", label: "Projects" },
+              { value: "4+", label: "Technologies" },
+            ].map((s) => (
+              <div key={s.label}>
+                <p className="font-heading text-2xl font-bold text-primary sm:text-3xl">{s.value}</p>
+                <p className="text-xs text-muted-foreground sm:text-sm">{s.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight text-foreground">
-          Hello, I'm{" "}
-          <span className="gradient-text">Udari Dhanunjay</span>
-        </h1>
+        {/* Right — circular profile */}
+        <div className="animate-fade-in-up relative mx-auto w-fit" style={{ animationDelay: "0.2s" }}>
+          <div className="absolute -inset-6 rounded-full bg-gradient-to-tr from-primary via-amber-300 to-accent opacity-30 blur-2xl" />
+          <div className="animate-spin-slow absolute -inset-3 rounded-full border-2 border-dashed border-primary/40" />
+          <div className="relative flex h-64 w-64 items-center justify-center overflow-hidden rounded-full border-4 border-primary/40 bg-gradient-to-br from-secondary to-card shadow-2xl sm:h-80 sm:w-80">
+            <span className="select-none font-heading text-6xl font-bold text-gradient sm:text-7xl">
+              UD
+            </span>
+          </div>
 
-        <div className="text-xl md:text-2xl font-heading font-medium text-foreground/80 h-9">
-          <TypewriterText
-            texts={[
-              "Software Developer",
-              "CS Student",
-              "Problem Solver",
-              "Tech Enthusiast",
-            ]}
-          />
-        </div>
-
-        <p className="text-muted-foreground max-w-lg leading-relaxed text-base">
-          I am a technology-driven individual passionate about problem-solving and building efficient
-          systems. I enjoy working with modern web technologies and continuously learning new skills
-          to grow as a developer.
-        </p>
-
-        {/* Stats row */}
-        <div className="flex gap-8 py-2">
-          {[
-            { value: "3+", label: "Years Learning" },
-            { value: "5+", label: "Projects" },
-            { value: "4+", label: "Technologies" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-2xl font-heading font-bold gradient-text">{stat.value}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex gap-4 flex-wrap pt-2">
-          <a
-            href="#projects"
-            className="group relative px-7 py-3 rounded-full bg-primary text-primary-foreground font-semibold transition-all duration-300 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-105"
-          >
-            <span className="relative z-10">View Projects</span>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </a>
-          <a
-            href="#contact"
-            className="px-7 py-3 rounded-full border-2 border-primary/50 text-primary font-semibold hover:bg-primary/10 hover:border-primary transition-all duration-300 hover:scale-105 backdrop-blur-sm"
-          >
-            Contact Me
-          </a>
+          <div className="animate-float absolute -left-6 top-10 glass-card flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium shadow-lg">
+            <GraduationCap className="text-primary" size={16} /> B.Tech CSE
+          </div>
+          <div className="animate-float-delayed absolute -right-8 top-1/3 glass-card flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium shadow-lg">
+            <Zap className="text-primary" size={16} /> ServiceNow
+          </div>
+          <div className="animate-float absolute -bottom-2 left-1/4 glass-card flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium shadow-lg">
+            <Code2 className="text-primary" size={16} /> React & Python
+          </div>
         </div>
       </div>
 
-      {/* Profile image with decorative elements */}
-      <div className="flex justify-center animate-fade-in-up [animation-delay:0.2s]">
-        <div className="relative">
-          {/* Rotating ring */}
-          <div className="absolute inset-[-16px] rounded-full border-2 border-dashed border-primary/20 animate-spin-slow" />
-          {/* Gradient ring */}
-          <div className="absolute inset-[-4px] rounded-full bg-gradient-to-tr from-primary via-accent to-primary p-[3px] animate-float">
-            <div className="w-full h-full rounded-full bg-background" />
-          </div>
-
-          <div className="w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden relative z-10 shadow-2xl shadow-primary/20">
-            <img
-              src={profileImg}
-              alt="Udari Dhanunjay"
-              className="w-full h-full object-cover"
-              width={512}
-              height={512}
-            />
-          </div>
-
-          {/* Floating badges */}
-          <div className="absolute -top-4 -right-4 bg-card/90 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-lg border border-border/50 animate-float z-20">
-            <span className="text-lg font-heading font-bold text-primary">🎓</span>
-            <span className="text-xs text-muted-foreground ml-1.5">B.Tech CSE</span>
-          </div>
-
-          <div className="absolute -bottom-2 -left-6 bg-card/90 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-lg border border-border/50 animate-float [animation-delay:1.5s] z-20">
-            <span className="text-lg">⚡</span>
-            <span className="text-xs text-muted-foreground ml-1.5">React & Python</span>
-          </div>
-
-          <div className="absolute bottom-8 -right-8 bg-card/90 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-lg border border-border/50 animate-float [animation-delay:0.8s] z-20">
-            <span className="text-lg">💻</span>
-            <span className="text-xs text-muted-foreground ml-1.5">Full Stack</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* Scroll indicator */}
-    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-      <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex justify-center pt-2">
-        <div className="w-1.5 h-3 rounded-full bg-primary animate-pulse" />
-      </div>
-    </div>
-  </section>
-);
+      <a
+        href="#about"
+        aria-label="Scroll to About"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground transition-colors hover:text-primary"
+      >
+        <ChevronDown size={28} className="animate-bounce" />
+      </a>
+    </section>
+  );
+};
 
 export default HeroSection;

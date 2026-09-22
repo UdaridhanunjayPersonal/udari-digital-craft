@@ -9,15 +9,17 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 const Index = () => (
-  <div className="min-h-screen">
+  <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
     <Navbar />
-    <HeroSection />
-    <AboutSection />
-    <SkillsSection />
-    <ProjectsSection />
-    <EducationSection />
-    <CareerSection />
-    <ContactSection />
+    <main>
+      <HeroSection />
+      <AboutSection />
+      <SkillsSection />
+      <ProjectsSection />
+      <EducationSection />
+      <CareerSection />
+      <ContactSection />
+    </main>
     <Footer />
   </div>
 );

@@ -1,59 +1,54 @@
-import { GraduationCap, Award, BookOpen } from "lucide-react";
+import { Award, GraduationCap, Presentation } from "lucide-react";
 
 const EducationSection = () => (
-  <section id="education" className="section-padding">
-    <div className="container mx-auto max-w-5xl">
-      <p className="section-subtitle text-center">Background</p>
-      <h2 className="section-title text-center mt-2 mb-12">Education & Certifications</h2>
+  <section id="education" className="bg-card/40 py-24">
+    <div className="container">
+      <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-primary">Journey</p>
+      <h2 className="mb-12 font-heading text-3xl font-bold sm:text-4xl">Education & Achievements</h2>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Education */}
-        <div className="p-6 rounded-2xl bg-card border border-border">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <GraduationCap className="w-5 h-5 text-primary" />
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="glass-card rounded-xl p-6 transition-all hover:-translate-y-1 hover:border-primary/40">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="rounded-lg bg-primary/10 p-2 text-primary">
+              <GraduationCap size={22} />
             </div>
-            <h3 className="font-heading font-semibold text-foreground">Education</h3>
+            <h3 className="font-heading text-lg font-semibold">Education</h3>
           </div>
-          <div className="border-l-2 border-primary/30 pl-5 space-y-2">
-            <h4 className="font-semibold text-foreground">B.Tech in Computer Science & Engineering</h4>
-            <p className="text-sm text-muted-foreground">CMR Institute of Technology, Hyderabad</p>
-            <p className="text-xs text-primary font-medium">2023 – 2026</p>
-          </div>
+          <p className="font-semibold">B.Tech in Computer Science & Engineering</p>
+          <p className="mt-1 text-sm text-muted-foreground">CMR Institute of Technology, Hyderabad</p>
+          <p className="mt-2 inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+            2023 – 2026
+          </p>
         </div>
 
-        {/* Certifications */}
-        <div className="p-6 rounded-2xl bg-card border border-border">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Award className="w-5 h-5 text-primary" />
+        <div className="glass-card rounded-xl p-6 transition-all hover:-translate-y-1 hover:border-primary/40">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="rounded-lg bg-primary/10 p-2 text-primary">
+              <Award size={22} />
             </div>
-            <h3 className="font-heading font-semibold text-foreground">Certifications</h3>
+            <h3 className="font-heading text-lg font-semibold">Certification</h3>
           </div>
-          <div className="border-l-2 border-primary/30 pl-5 space-y-2">
-            <h4 className="font-semibold text-foreground">JavaScript (Basic)</h4>
-            <p className="text-sm text-muted-foreground">HackerRank</p>
-            <p className="text-xs text-primary font-medium">December 31, 2023</p>
-          </div>
+          <p className="font-semibold">JavaScript (Basic)</p>
+          <p className="mt-1 text-sm text-muted-foreground">HackerRank</p>
+          <p className="mt-2 inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+            31 Dec 2023
+          </p>
         </div>
 
-        {/* Experience / Workshop */}
-        <div className="md:col-span-2 p-6 rounded-2xl bg-card border border-border">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <BookOpen className="w-5 h-5 text-primary" />
+        <div className="glass-card rounded-xl p-6 transition-all hover:-translate-y-1 hover:border-primary/40">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="rounded-lg bg-primary/10 p-2 text-primary">
+              <Presentation size={22} />
             </div>
-            <h3 className="font-heading font-semibold text-foreground">Experience & Workshops</h3>
+            <h3 className="font-heading text-lg font-semibold">Workshop</h3>
           </div>
-          <div className="border-l-2 border-primary/30 pl-5 space-y-2">
-            <h4 className="font-semibold text-foreground">Research and Development Cell</h4>
-            <p className="text-sm text-muted-foreground">CMR Institute of Technology</p>
-            <p className="text-sm text-muted-foreground mt-2">
-              Attended a seminar on "Creating a Research Paper" — learned research writing,
-              literature review, data analysis, citation styles, plagiarism avoidance, and
-              publication process.
-            </p>
-          </div>
+          <p className="font-semibold">Research & Development Cell</p>
+          <p className="mt-1 text-sm text-muted-foreground">CMR Institute of Technology</p>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            Attended a seminar on "Creating a Research Paper" — learned research writing,
+            literature review, data analysis, citation styles, plagiarism avoidance, and the
+            publication process.
+          </p>
         </div>
       </div>
     </div>

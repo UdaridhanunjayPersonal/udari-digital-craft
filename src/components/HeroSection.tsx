@@ -41,7 +41,7 @@ const HeroSection = () => {
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-32 left-1/4 h-96 w-96 rounded-full bg-primary/15 blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-accent/15 blur-[120px]" />
-ec      </div>
+      </div>
 
       <div className="container grid items-center gap-12 py-24 md:grid-cols-2">
         {/* Left */}
